@@ -6,6 +6,7 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
@@ -15,10 +16,12 @@ public class MessageController {
     private MqttPahoMessageHandler mqtt;
 
     @RequestMapping(value="/send")
-    public void sendMessage(){
+    @ResponseBody
+    public String sendMessage(){
         Message<String> message = MessageBuilder.withPayload("==========1111111111111111111111111=========").setHeader(MqttHeaders.TOPIC, "topicTest1").build();
         mqtt.handleMessage(message);
         System.out.println("成功");
+        return "success";
     }
 }
 
