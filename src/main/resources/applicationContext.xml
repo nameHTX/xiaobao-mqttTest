@@ -69,7 +69,7 @@
 
     <!-- 消息处理类 -->
     <int:service-activator id="startCaseService2"
-                           input-channel="startCase" ref="mqttCaseService2" method="startCase" />
+                           input-channel="startCase2" ref="mqttCaseService2" method="startCase" />
 
     <bean id="mqttCaseService2" class="com.austen.service.MqttService2" />
 
