@@ -27,22 +27,23 @@
     </bean>
 
     <bean id="mqttHandler" class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler">
-        <constructor-arg name="clientId" value="mqttTestClient1"/>
+        <constructor-arg name="clientId" value="mqttTestClientPush"/>
         <constructor-arg name="clientFactory" ref="clientFactory"/>
         <property name="defaultQos" value="1"/>
-        <property name="defaultRetained" value="true"/>
+        <property name="defaultRetained" value="false" />
     </bean>
 
 
     <!-- 消息适配器  -->
     <int-mqtt:message-driven-channel-adapter
-            id="mqttInbound" client-id="mqttTestClient1" url="tcp://localhost:1883"
-            topics="topicTest1"
+            id="mqttInbound" client-id="mqttTestClientGet1" url="tcp://localhost:1883"
+            topics="topicTest/teams/+"
             qos="1"
             client-factory="clientFactory"
             auto-startup="true"
             send-timeout="12"
-            channel="startCase" />
+            channel="startCase"
+    />
 
     <int:channel id="startCase" />
 
@@ -51,5 +52,25 @@
                            input-channel="startCase" ref="mqttCaseService" method="startCase" />
 
     <bean id="mqttCaseService" class="com.austen.service.MqttService" />
+
+
+    <!-- 消息适配器  -->
+    <int-mqtt:message-driven-channel-adapter
+            id="mqttInbound2" client-id="mqttTestClientGet2" url="tcp://localhost:1883"
+            topics="topicTest/teams/+"
+            qos="1"
+            client-factory="clientFactory"
+            auto-startup="true"
+            send-timeout="12"
+            channel="startCase2"
+    />
+
+    <int:channel id="startCase2" />
+
+    <!-- 消息处理类 -->
+    <int:service-activator id="startCaseService2"
+                           input-channel="startCase" ref="mqttCaseService2" method="startCase" />
+
+    <bean id="mqttCaseService2" class="com.austen.service.MqttService2" />
 
 </beans>

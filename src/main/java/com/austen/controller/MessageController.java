@@ -18,7 +18,7 @@ public class MessageController {
     @RequestMapping(value="/send")
     @ResponseBody
     public String sendMessage(){
-        Message<String> message = MessageBuilder.withPayload("==========1111111111111111111111111=========").setHeader(MqttHeaders.TOPIC, "topicTest1").build();
+        Message<String> message = MessageBuilder.withPayload("======44444444444444======").setHeader(MqttHeaders.TOPIC, "topicTest/teams/1").build();
         mqtt.handleMessage(message);
         System.out.println("成功");
         return "success";
