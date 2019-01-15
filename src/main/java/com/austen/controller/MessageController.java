@@ -5,6 +5,7 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,6 +23,12 @@ public class MessageController {
         mqtt.handleMessage(message);
         System.out.println("成功");
         return "success";
+    }
+
+    @RequestMapping(value="/test")
+    @ResponseBody
+    public void getConnectMsg(@RequestBody String param){
+        System.out.println("连接信息："+param);
     }
 }
 
